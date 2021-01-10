@@ -2,8 +2,8 @@
 
 .game-celluley {
     display: inline-block;
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     border: 1px solid #ccc;
     background-color: yellow;
     text-align: center;
@@ -14,8 +14,8 @@
   
   .game-celluleg {
     display: inline-block;
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     border: 1px solid #ccc;
     background-color: green;
     text-align: center;

@@ -15,6 +15,7 @@ use cell::State;
 pub enum Msg{
   //  ToggleCellule(usize),
     Solve,
+    Increment(usize)
 }
 #[derive(Clone,Debug)]
 pub struct Cellules{
@@ -26,17 +27,19 @@ pub struct Cellules{
 }
 
 impl Cellules{
-    fn view_cellule(&self, x:usize,cell:&Cell) -> Html{
+    fn view_cellule(&self, x:usize,y:usize,cell:&Cell) -> Html{
 
  
         let mut cell_color =  match  cell.state {
                 State::yellow => { 'y' },
                 State::green => { 'g' },
         };
-
+        let idx = (y*8+y) +x;
              // log::info!("{:?}",cell_color);
         html!{
-            <div key=x class=format!("game-cellule{}",cell_color)>{ cell.value } </div> 
+            <div key=idx class=format!("game-cellule{}",cell_color) 
+            onclick=self.link.callback(move |_| Msg::Increment(idx))>{ cell.value } 
+             </div> 
         }
 
     }
@@ -320,15 +323,15 @@ impl Component for Cellules{
 
         Self{
             link,
-            cellule:vec![Cell::new_yellow(0,0,0),Cell::new_yellow(0,0,1),Cell::new_yellow(0,0,2),Cell::new_yellow(2,0,3),Cell::new_yellow(6,0,4),Cell::new_yellow(0,0,5),Cell::new_yellow(7,0,6),Cell::new_yellow(0,0,7),Cell::new_yellow(1,0,8),
-            Cell::new_yellow(6,1,0),Cell::new_yellow(8,1,1),Cell::new_yellow(0,1,2), Cell::new_yellow(0,1,3),Cell::new_yellow(7,1,4),Cell::new_yellow(0,1,5),Cell::new_yellow(0,1,6),Cell::new_yellow(9,1,7),Cell::new_yellow(0,1,8),
-            Cell::new_yellow(1,2,0),Cell::new_yellow(9,2,1),Cell::new_yellow(0,2,2),Cell::new_yellow(0,2,3),Cell::new_yellow(0,2,4),Cell::new_yellow(4,2,5),Cell::new_yellow(5,2,6),Cell::new_yellow(0,2,7),Cell::new_yellow(0,2,8),
-            Cell::new_yellow(8,3,0),Cell::new_yellow(2,3,1),Cell::new_yellow(0,3,2),Cell::new_yellow(1,3,3),Cell::new_yellow(0,3,4),Cell::new_yellow(0,3,5),Cell::new_yellow(0,3,6),Cell::new_yellow(4,3,7),Cell::new_yellow(0,3,8),
-            Cell::new_yellow(0,4,0),Cell::new_yellow(0,4,1),Cell::new_yellow(4,4,2),Cell::new_yellow(6,4,3),Cell::new_yellow(0,4,4),Cell::new_yellow(2,4,5),Cell::new_yellow(9,4,6),Cell::new_yellow(0,4,7),Cell::new_yellow(0,4,8),
-            Cell::new_yellow(0,5,0),Cell::new_yellow(5,5,1),Cell::new_yellow(0,5,2),Cell::new_yellow(0,5,3),Cell::new_yellow(0,5,4),Cell::new_yellow(3,5,5),Cell::new_yellow(0,5,6),Cell::new_yellow(2,5,7),Cell::new_yellow(8,5,8),
-            Cell::new_yellow(0,6,0),Cell::new_yellow(0,6,1),Cell::new_yellow(9,6,2),Cell::new_yellow(3,6,3),Cell::new_yellow(0,6,4),Cell::new_yellow(0,6,5),Cell::new_yellow(0,6,6),Cell::new_yellow(7,6,7),Cell::new_yellow(4,6,8),
-            Cell::new_yellow(0,7,0),Cell::new_yellow(4,7,1),Cell::new_yellow(0,7,2),Cell::new_yellow(0,7,3),Cell::new_yellow(5,7,4),Cell::new_yellow(0,7,5),Cell::new_yellow(0,7,6),Cell::new_yellow(3,7,7),Cell::new_yellow(6,7,8),
-            Cell::new_yellow(7,8,0),Cell::new_yellow(0,8,1),Cell::new_yellow(3,8,2),Cell::new_yellow(0,8,3),Cell::new_yellow(1,8,4),Cell::new_yellow(8,8,5),Cell::new_yellow(0,8,6),Cell::new_yellow(0,8,7),Cell::new_yellow(0,8,8)],
+            cellule:vec![Cell::new_yellow(0,0,0),Cell::new_yellow(0,0,1),Cell::new_yellow(0,0,2),Cell::new_yellow(0,0,3),Cell::new_yellow(0,0,4),Cell::new_yellow(0,0,5),Cell::new_yellow(0,0,6),Cell::new_yellow(0,0,7),Cell::new_yellow(0,0,8),
+            Cell::new_yellow(0,1,0),Cell::new_yellow(0,1,1),Cell::new_yellow(0,1,2), Cell::new_yellow(0,1,3),Cell::new_yellow(0,1,4),Cell::new_yellow(0,1,5),Cell::new_yellow(0,1,6),Cell::new_yellow(0,1,7),Cell::new_yellow(0,1,8),
+            Cell::new_yellow(0,2,0),Cell::new_yellow(0,2,1),Cell::new_yellow(0,2,2),Cell::new_yellow(0,2,3),Cell::new_yellow(0,2,4),Cell::new_yellow(0,2,5),Cell::new_yellow(0,2,6),Cell::new_yellow(0,2,7),Cell::new_yellow(0,2,8),
+            Cell::new_yellow(0,3,0),Cell::new_yellow(0,3,1),Cell::new_yellow(0,3,2),Cell::new_yellow(0,3,3),Cell::new_yellow(0,3,4),Cell::new_yellow(0,3,5),Cell::new_yellow(0,3,6),Cell::new_yellow(0,3,7),Cell::new_yellow(0,3,8),
+            Cell::new_yellow(0,4,0),Cell::new_yellow(0,4,1),Cell::new_yellow(0,4,2),Cell::new_yellow(0,4,3),Cell::new_yellow(0,4,4),Cell::new_yellow(0,4,5),Cell::new_yellow(0,4,6),Cell::new_yellow(0,4,7),Cell::new_yellow(0,4,8),
+            Cell::new_yellow(0,5,0),Cell::new_yellow(0,5,1),Cell::new_yellow(0,5,2),Cell::new_yellow(0,5,3),Cell::new_yellow(0,5,4),Cell::new_yellow(0,5,5),Cell::new_yellow(0,5,6),Cell::new_yellow(0,5,7),Cell::new_yellow(0,5,8),
+            Cell::new_yellow(0,6,0),Cell::new_yellow(0,6,1),Cell::new_yellow(0,6,2),Cell::new_yellow(0,6,3),Cell::new_yellow(0,6,4),Cell::new_yellow(0,6,5),Cell::new_yellow(0,6,6),Cell::new_yellow(0,6,7),Cell::new_yellow(0,6,8),
+            Cell::new_yellow(0,7,0),Cell::new_yellow(0,7,1),Cell::new_yellow(0,7,2),Cell::new_yellow(0,7,3),Cell::new_yellow(0,7,4),Cell::new_yellow(0,7,5),Cell::new_yellow(0,7,6),Cell::new_yellow(0,7,7),Cell::new_yellow(0,7,8),
+            Cell::new_yellow(0,8,0),Cell::new_yellow(0,8,1),Cell::new_yellow(0,8,2),Cell::new_yellow(0,8,3),Cell::new_yellow(0,8,4),Cell::new_yellow(0,8,5),Cell::new_yellow(0,8,6),Cell::new_yellow(0,8,7),Cell::new_yellow(0,8,8)],
             //  props:props,
           //  props:props,
          //   path:Vec::new(),
@@ -338,10 +341,14 @@ impl Component for Cellules{
 
     fn update(&mut self, msg: Self::Message) -> ShouldRender {
         match msg{
-            Msg::Solve => {
-                            self.solvewrap();
-                            log::info!("solved");
-                        }
+            Msg::Solve          =>  {
+                                         self.solvewrap();
+                                         log::info!("solved");
+                                    }
+            Msg::Increment(idx) =>  {
+                                        self.cellule[idx].value += 1;
+
+                                    }
         }     
                 true 
     }
@@ -359,7 +366,7 @@ impl Component for Cellules{
                                         let cells = cell_row.iter()
                                                     .enumerate()
                                                     .map(|(x,cell)| {
-                                                        self.view_cellule(x,cell)
+                                                        self.view_cellule(x,y,cell)
                                                     }) ;
                                         html!{
                                                 <div >{ for cells } </div>
